@@ -1,0 +1,14 @@
+[package]
+org = "wso2"
+name = "sales_analytics"
+version = "0.1.0"
+distribution = "2201.10.3"
+
+[[dependency]]
+org = "ballerinax"
+name = "hubspot.crm.commerce.quotes"
+version = "1.0.0"
+repository = "local"
+
+[build-options]
+observabilityIncluded = true
