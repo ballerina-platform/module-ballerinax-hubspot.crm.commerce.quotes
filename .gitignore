@@ -56,3 +56,8 @@ build
 
 # Ignore Docker env file
 docker.env
+
+#Examples
+examples/sales_analytics/target
+examples/sales_analytics/generated
+examples/sales_analytics/Config.toml

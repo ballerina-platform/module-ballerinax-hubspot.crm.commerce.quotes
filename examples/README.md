@@ -2,13 +2,20 @@
 
 The `ballerinax/hubspot.crm.commerce.quotes` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+1. [Sales Analytics System](./sales_analytics/) - A store can insert their quotes to the system, and system record and analyses the details on the quotes. 
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. Generate HubSpot credentials to authenticate the connector as described in the [Setup guide](https://central.ballerina.io/ballerinax/twitter/latest#setup-guide).
+
+2. For each example, create a `Config.toml` file with the related configuration. Below is an example of how your `Config.toml` file should be structured:
+
+    ```toml
+    [auth]
+    clientId = "<Client Id>"
+    clientSecret =  "<Client Secret>"
+    refreshToken = "<Refresh Token>"
+    credentialBearer =  "POST_BODY_BEARER"
 
 ## Running an example
 
