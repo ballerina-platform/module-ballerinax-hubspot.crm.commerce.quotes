@@ -19,8 +19,9 @@ import ballerina/oauth2;
 import ballerina/test;
 
 configurable string clientId = "clientId";
-configurable string clientSecret ="clientSecret";
+configurable string clientSecret = "clientSecret";
 configurable string refreshToken = "refreshToken";
+configurable boolean enableLiveServerTest = false;
 
 OAuth2RefreshTokenGrantConfig auth = {
     clientId,
@@ -29,14 +30,15 @@ OAuth2RefreshTokenGrantConfig auth = {
     credentialBearer: oauth2:POST_BODY_BEARER
 };
 
-final Client hubspotClient = check new ({auth});
+final Client hubspotClient = check new ({
+    auth: enableLiveServerTest ? auth
+        : {token: "test-token"}
+});
 
 string testQuoteId = "";
 
-boolean enableLiveServerTest = false;
-
 // Test function for creating a quote
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
@@ -44,7 +46,7 @@ function testCreateNewQuote() returns error? {
     SimplePublicObjectInputForCreate payload = {
         associations: [],
         properties: {
-            "hs_title": "Test Quote", 
+            "hs_title": "Test Quote",
             "hs_expiration_date": "2025-01-31"
         }
     };
@@ -56,14 +58,13 @@ function testCreateNewQuote() returns error? {
     testQuoteId = response.id;
 
     // Validate the response
-    test:assertEquals(response.properties["hs_title"], "Test Quote", 
-        "New quote not created successfully.");
-      
+    test:assertEquals(response.properties["hs_title"], "Test Quote",
+            "New quote not created successfully.");
+
 }
 
-
 // Test function for creating a batch of quotes
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
@@ -72,7 +73,7 @@ function testCreateNewBatchOfQuotes() returns error? {
     SimplePublicObjectInputForCreate batchInput1 = {
         associations: [],
         properties: {
-            "hs_title": "Test Quote 1", 
+            "hs_title": "Test Quote 1",
             "hs_expiration_date": "2025-02-28"
         }
     };
@@ -80,27 +81,26 @@ function testCreateNewBatchOfQuotes() returns error? {
     SimplePublicObjectInputForCreate batchInput2 = {
         associations: [],
         properties: {
-            "hs_title": "Test Quote 2", 
+            "hs_title": "Test Quote 2",
             "hs_expiration_date": "2025-04-30"
         }
     };
 
     BatchInputSimplePublicObjectInputForCreate payload = {
-        inputs: [batchInput1, batchInput2] 
+        inputs: [batchInput1, batchInput2]
     };
 
     // Call the Quotes API to create a new quote
     BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors response = check hubspotClient->/batch/create.post(payload);
 
     // Validate the response
-    test:assertEquals(response.results.length(), payload.inputs.length(), 
-        "New batch of quotes not created successfully."); 
-      
+    test:assertEquals(response.results.length(), payload.inputs.length(),
+            "New batch of quotes not created successfully.");
+
 }
 
-
 // Test for retrieving all quotes
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
@@ -108,12 +108,12 @@ function testGetAllQuotes() returns error? {
 
     CollectionResponseSimplePublicObjectWithAssociationsForwardPaging response = check hubspotClient->/.get();
 
-    test:assertTrue(response.results.length() > 0, 
-            msg = "No quotes found in the response."); 
+    test:assertTrue(response.results.length() > 0,
+            msg = "No quotes found in the response.");
 }
 
 // Test function for retrieving a quote
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
@@ -124,64 +124,62 @@ function testGetOneQuote() returns error? {
 }
 
 // Test function for retrieving a batch of quotes 
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
 function testGetBatchOfQuotes() returns error? {
 
     SimplePublicObjectId batchInput0 = {
-        id: testQuoteId 
+        id: testQuoteId
     };
 
     BatchReadInputSimplePublicObjectId payload = {
         properties: [],
-        propertiesWithHistory: [], 
+        propertiesWithHistory: [],
         inputs: [batchInput0]
     };
 
     BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors response = check hubspotClient->/batch/read.post(payload);
 
     // Validate essential fields
-    test:assertEquals(response.results.length(), payload.inputs.length(), msg = string`Only ${response.results.length()} IDs found.`);
-} 
-
+    test:assertEquals(response.results.length(), payload.inputs.length(), msg = string `Only ${response.results.length()} IDs found.`);
+}
 
 // Archive a quote by ID
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
-function testArchiveOneQuote() returns error?{
+function testArchiveOneQuote() returns error? {
 
-    http:Response response = check hubspotClient->/["0"].delete(); 
+    http:Response response = check hubspotClient->/["0"].delete();
 
     test:assertTrue(response.statusCode == 204);
 }
 
 // Archive batch of quotes by ID
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
-function testArchiveBatchOfQuoteById() returns error?{
+function testArchiveBatchOfQuoteById() returns error? {
 
-    SimplePublicObjectId id0 = {id:"0"};
+    SimplePublicObjectId id0 = {id: "0"};
 
     BatchInputSimplePublicObjectId payload = {
-        inputs:[
-            id0 
+        inputs: [
+            id0
         ]
     };
 
-    http:Response response = check hubspotClient->/batch/archive.post(payload); 
+    http:Response response = check hubspotClient->/batch/archive.post(payload);
 
     test:assertTrue(response.statusCode == 204);
 }
 
-
 // Test function for updating a quote
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
@@ -189,19 +187,19 @@ function testUpdateOneQuote() returns error? {
     SimplePublicObjectInput payload = {
         properties: {
             "hs_title": "Test Quote Modified",
-            "hs_expiration_date": "2025-03-31" 
+            "hs_expiration_date": "2025-03-31"
         }
     };
 
     // Call the Quotes API to update the quote
     SimplePublicObject response = check hubspotClient->/[testQuoteId].patch(payload);
 
-    test:assertEquals(response.properties["hs_title"], "Test Quote Modified", 
-        "Quote not updated successfully."); 
+    test:assertEquals(response.properties["hs_title"], "Test Quote Modified",
+            "Quote not updated successfully.");
 }
 
 // Test function for updating a batch of quotes
-@test:Config{
+@test:Config {
     groups: ["live_tests"],
     enable: enableLiveServerTest
 }
@@ -210,7 +208,7 @@ function testUpdateBatchOfQuotes() returns error? {
     SimplePublicObjectBatchInput batchInput3 = {
         id: testQuoteId,
         properties: {
-            "hs_title": "Test Quote 3", 
+            "hs_title": "Test Quote 3",
             "hs_expiration_date": "2025-04-30"
         }
     };
@@ -222,7 +220,7 @@ function testUpdateBatchOfQuotes() returns error? {
     // Call the Quotes API to create a new quote
     BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors response = check hubspotClient->/batch/update.post(payload);
 
-    test:assertEquals(response.results.length(), payload.inputs.length(), 
-        "Quote in response does not match the expected quote."); 
+    test:assertEquals(response.results.length(), payload.inputs.length(),
+            "Quote in response does not match the expected quote.");
 }
 
