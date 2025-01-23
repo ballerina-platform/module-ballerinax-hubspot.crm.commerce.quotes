@@ -1,7 +1,7 @@
 ## Sales Analytics System
 
 A store can insert, update and delete their daily quotes in the system.
-System records and analyses the data on the quotes, and user can get recorded data and analitics.
+System records and analyses the data on the quotes, and user can get recorded data and analytics.
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Refer to the [Setup guide](../../ballerina/Package.md#setup-guide) to obtain nec
 
 ### 2. Configuration
 
-Create a `Config.toml` file in the example's root directory and, provide your Hubspot account related configurations as follows:
+Create a `Config.toml` file in the example's root directory and, provide your HubSpot account related configurations as follows:
 
 ```toml
 clientId = "<client-id>"
