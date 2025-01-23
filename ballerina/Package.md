@@ -14,13 +14,13 @@ If you have an account already, go to the [HubSpot developer portal](https://app
 
 If you don't have a HubSpot Developer Account you can sign up to a free account [here](https://developers.hubspot.com/get-started)
 
-### Step 2 (Optional): Create a [Developer Test Account](https://developers.hubspot.com/beta-docs/getting-started/account-types#developer-test-accounts) under your account
+### Step 2 (Optional): Create a Developer Test Account
 
-Within app developer accounts, you can create developer test accounts to test apps and integrations without affecting any real HubSpot data.
+Within app developer accounts, you can create a [developer test account](https://developers.hubspot.com/beta-docs/getting-started/account-types#developer-test-accounts) under your account to test apps and integrations without affecting any real HubSpot data.
 
->**Note:** These accounts are only for development and testing purposes. In production you should not use Developer Test Accounts.
+> **Note:** These accounts are only for development and testing purposes. In production you should not use Developer Test Accounts.
 
-1. Go to Test Account section from the left sidebar. 
+1. Go to Test Account section from the left sidebar.
 
    ![Hubspot developer testacc1](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.commerce.quotes/blob/main/docs/setup/resources/create_developer_account_1.png)
 
@@ -32,7 +32,7 @@ Within app developer accounts, you can create developer test accounts to test ap
 
    ![Hubspot developer testacc3](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.commerce.quotes/blob/main/docs/setup/resources/create_developer_account_3.png)
 
-### Step 3: Create a HubSpot App under your account.
+### Step 3: Create a HubSpot App under your account
 
 1. In your developer account, navigate to the "Apps" section. Click on "Create App"
 
@@ -40,7 +40,7 @@ Within app developer accounts, you can create developer test accounts to test ap
 
 2. Provide the necessary details, including the app name and description.
 
-### Step 4: Configure the Authentication Flow.
+### Step 4: Configure the Authentication Flow
 
 1. Move to the Auth Tab.
 
@@ -48,13 +48,13 @@ Within app developer accounts, you can create developer test accounts to test ap
 
 2. In the Scopes section, add the following scopes for your app using the "Add new scope" button.
 
-   `crm.lists.read`
-   `crm.lists.write`
-   `cms.membership.access_groups.write`
+   - `crm.lists.read`
+   - `crm.lists.write`
+   - `cms.membership.access_groups.write`
 
    ![Authentication 2](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.commerce.quotes/blob/main/docs/setup/resources/authentication_2.png)
 
-4. Add your Redirect URI in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
+3. Add your Redirect URI in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
 
    ![Authentication 3](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.commerce.quotes/blob/main/docs/setup/resources/authentication_3.png)
 
@@ -70,13 +70,13 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
 1. Create an authorization URL using the following format.
 
-2. Paste it in the browser and select your developer test account to intall the app when prompted.
+2. Paste it in the browser and select your developer test account to install the app when prompted.
 
    ![Setup auth flow](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.commerce.quotes/blob/main/docs/setup/resources/setup_auth_flow.png)
 
 3. A code will be displayed in the browser. Copy the code.
 
-4. Run the following curl command. Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI`> and `<YOUR_CLIENT_SECRET>` with your specific value. Use the code you received in the above step 3 as the `<CODE>`.
+4. Run the following curl command. Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI>`, and `<YOUR_CLIENT_SECRET>` with your specific value. Use the code you received in the above step 3 as the `<CODE>`.
 
    - Linux/macOS
 
@@ -134,7 +134,7 @@ import ballerinax/hubspot.crm.commerce.quotes as crmquotes;
 
 2. Instantiate a `OAuth2RefreshTokenGrantConfig` with the obtained credentials and initialize the connector with it.
 
-    ```ballerina 
+    ```ballerina
     configurable string clientId = ?;
     configurable string clientSecret = ?;
     configurable string refreshToken = ?;
@@ -146,16 +146,15 @@ import ballerinax/hubspot.crm.commerce.quotes as crmquotes;
         credentialBearer: oauth2:POST_BODY_BEARER
     };
 
-    final crmlists:Client crmListClient = check new (config = {auth});
-
+    final crmlists:Client crmListClient = check new ({auth});
     ```
 
 ### Step 3: Invoke the connector operation
 
-Now, utilize the available connector operations. A sample usecase is shown below.
+Now, utilize the available connector operations. A sample use case is shown below.
 
 #### Create a CRM List
-    
+
 ```ballerina
 
 OAuth2RefreshTokenGrantConfig auth = {
@@ -178,7 +177,7 @@ public function main() returns error? {
     };
 
     // Send the request to create a quote
-    http:Response response = check hubspotClient->/crm/v3/objects/quotes.post(payload); 
+    http:Response response = check hubspotClient->/crm/v3/objects/quotes.post(payload);
 
     // Print the response
     io:println("Response: ", response.getJsonPayload());
@@ -189,3 +188,4 @@ public function main() returns error? {
 
 The `HubSpot CRM Commerce Quotes` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.commerce.quotes/tree/main/examples/), covering the following use cases:
 
+1. [Sales Analytics System](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.commerce.quotes/tree/main/examples/sales-analytics) - A store can insert their quotes to the system, and system record and analyses the details on the quotes.
