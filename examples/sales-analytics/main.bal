@@ -118,9 +118,12 @@ public function main() returns error? {
     io:println(modifiedQuotes.results); 
 
     // Archive one sales quote by ID
-    http:Response archive_response = check storeClient->/[quoteId].delete(); 
-    io:println(archive_response);
-
+    error? archive_response = check storeClient->/[quoteId].delete(); 
+    if archive_response is () {
+        io:println("Archive successful");
+    } else {
+        io:println("Archive failed: ", archive_response);
+    }
     // Archive a batch of quotes
     hsQuotes:SimplePublicObjectId id0 = {id:"0"};
     hsQuotes:BatchInputSimplePublicObjectId batchArchivePayload = {
@@ -128,6 +131,10 @@ public function main() returns error? {
             id0 
         ]
     };
-    http:Response batchArchiveResponse = check storeClient->/batch/archive.post(batchArchivePayload); 
-    io:println(batchArchiveResponse); 
+    error? batchArchiveResponse = check storeClient->/batch/archive.post(batchArchivePayload);
+    if batchArchiveResponse is () {
+        io:println("Batch archive successful");
+    } else {
+        io:println("Batch archive failed: ", batchArchiveResponse);
+    }
 }

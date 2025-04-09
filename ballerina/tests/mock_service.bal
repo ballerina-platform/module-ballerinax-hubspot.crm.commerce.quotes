@@ -20,9 +20,8 @@ service on new http:Listener(9090) {
     
     // Archive
     resource function delete crm/v3/objects/quotes/[string quoteId]() returns http:Response {
-        http:Response response = new();
+        http:Response response = new;
         response.statusCode = http:STATUS_NO_CONTENT;
-        response.setPayload("Successfully deleted");
         return response;
     }
 
