@@ -14,7 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/http;
 import ballerina/test;
 
 final Client quotesClient = check new(config = {auth:{
@@ -60,9 +59,9 @@ function testGetAQuoteById() returns error? {
 @test:Config{}
 function testArchiveAQuoteById() returns error?{
 
-    http:Response response = check quotesClient->/["0"].delete(); 
+    error? response = quotesClient->/["0"].delete(); 
 
-    test:assertTrue(response.statusCode == 204);
+    test:assertTrue(response == ());
 }
 
 // Test function to update a quote

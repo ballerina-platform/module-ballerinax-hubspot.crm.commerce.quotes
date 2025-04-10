@@ -14,7 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/http;
 import ballerina/oauth2;
 import ballerina/test;
 
@@ -153,9 +152,9 @@ function testGetBatchOfQuotes() returns error? {
 }
 function testArchiveOneQuote() returns error? {
 
-    http:Response response = check hubspotClient->/["0"].delete();
+    error? response = hubspotClient->/["0"].delete();
 
-    test:assertTrue(response.statusCode == 204);
+    test:assertTrue(response == ());
 }
 
 // Archive batch of quotes by ID
@@ -173,9 +172,9 @@ function testArchiveBatchOfQuoteById() returns error? {
         ]
     };
 
-    http:Response response = check hubspotClient->/batch/archive.post(payload);
+    error? response = hubspotClient->/batch/archive.post(payload);
 
-    test:assertTrue(response.statusCode == 204);
+    test:assertTrue(response == ());
 }
 
 // Test function for updating a quote
