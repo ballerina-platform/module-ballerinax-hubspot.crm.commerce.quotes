@@ -2,7 +2,14 @@
 
 [HubSpot](https://www.hubspot.com) is an AI-powered customer relationship management (CRM) platform.
 
-The `ballerinax/hubspot.crm.commerce.quotes` package offers APIs to connect and interact with [HubSpot API for CRM Quotes](https://developers.hubspot.com/docs/reference/api/crm/commerce/quotes) endpoints, specifically based on [HubSpot CRM Quotes REST API](https://developers.hubspot.com/docs/reference/api).
+The HubSpot connector offers APIs to connect and interact with [HubSpot API for CRM Quotes](https://developers.hubspot.com/docs/reference/api/crm/commerce/quotes) endpoints, specifically based on [HubSpot CRM Quotes REST API](https://developers.hubspot.com/docs/reference/api).
+
+### Key Features
+
+- Create, read, update, and delete quote records in HubSpot CRM
+- Batch operations for bulk quote management
+- Search quotes with filtering support
+- Manage quote associations with other CRM objects
 
 ## Setup guide
 
