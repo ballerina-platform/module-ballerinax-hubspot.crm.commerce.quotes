@@ -19,39 +19,39 @@
 
 import ballerina/http;
 
-# Represents a standard error response returned by the Quotes API.
+# Represents a standard error response returned by the Quotes API
 public type StandardError record {
-    # Optional sub-category providing additional error classification.
+    # Optional sub-category providing additional error classification
     record {} subCategory?;
-    # Contextual metadata map with string array values for the error.
+    # Contextual metadata map with string array values for the error
     record {|string[]...;|} context;
-    # Map of relevant links associated with the error response.
+    # Map of relevant links associated with the error response
     record {|string...;|} links;
-    # Unique identifier for the error instance.
+    # Unique identifier for the error instance
     string id?;
-    # High-level category classifying the type of error.
+    # High-level category classifying the type of error
     string category;
-    # Human-readable message describing the error.
+    # Human-readable message describing the error
     string message;
-    # List of detailed error entries associated with this error.
+    # List of detailed error entries associated with this error
     ErrorDetail[] errors;
-    # HTTP status code or status label for the error response.
+    # HTTP status code or status label for the error response
     string status;
 };
 
-# A paginated collection of associated object IDs.
+# A paginated collection of associated object IDs
 public type CollectionResponseAssociatedId record {
-    # Pagination metadata containing cursors for navigating to the next or previous page.
+    # Pagination metadata containing cursors for navigating to the next or previous page
     Paging paging?;
-    # Array of associated IDs returned in the response.
+    # Array of associated IDs returned in the response
     AssociatedId[] results;
 };
 
-# Defines the target object and association types for a relationship.
+# Defines the target object and association types for a relationship
 public type PublicAssociationsForObject record {
-    # List of association specs defining the relationship types.
+    # List of association specs defining the relationship types
     AssociationSpec[] types;
-    # Represents a public object identifier containing a unique ID string.
+    # Represents a public object identifier containing a unique ID string
     PublicObjectId to;
 };
 
@@ -71,29 +71,29 @@ public type GetCrmV3ObjectsQuotesGetPageQueries record {
     string[] properties?;
 };
 
-# Batch operation response containing results and execution timestamps.
+# Batch operation response containing results and execution timestamps
 public type BatchResponseSimplePublicObject record {
-    # Timestamp when the batch operation completed.
+    # Timestamp when the batch operation completed
     string completedAt;
-    # Timestamp when the batch operation was requested.
+    # Timestamp when the batch operation was requested
     string requestedAt?;
-    # Timestamp when the batch operation began processing.
+    # Timestamp when the batch operation began processing
     string startedAt;
-    # Map of supplemental links related to the batch response.
+    # Map of supplemental links related to the batch response
     record {|string...;|} links?;
-    # Array of quote objects returned by the batch operation.
+    # Array of quote objects returned by the batch operation
     SimplePublicObject[] results;
-    # Current processing status of the batch request.
+    # Current processing status of the batch request
     "PENDING"|"PROCESSING"|"CANCELED"|"COMPLETE" status;
 };
 
-# A logical grouping of filters applied to a search query.
+# A logical grouping of filters applied to a search query
 public type FilterGroup record {
-    # Array of filter conditions within the group.
+    # Array of filter conditions within the group
     Filter[] filters;
 };
 
-# Detailed information about a specific error encountered in a request.
+# Detailed information about a specific error encountered in a request
 public type ErrorDetail record {
     # A specific category that contains more specific detail about the error
     string subCategory?;
@@ -107,85 +107,85 @@ public type ErrorDetail record {
     string message;
 };
 
-# Pagination metadata for forward-only cursor-based navigation.
+# Pagination metadata for forward-only cursor-based navigation
 public type ForwardPaging record {
-    # Pagination cursor object for retrieving the next page of results.
+    # Pagination cursor object for retrieving the next page of results
     NextPage next?;
 };
 
-# A minimal object representation containing only a unique identifier.
+# A minimal object representation containing only a unique identifier
 public type SimplePublicObjectId record {
-    # The unique identifier of the object.
+    # The unique identifier of the object
     string id;
 };
 
-# Batch upsert response containing results, errors, and processing status.
+# Batch upsert response containing results, errors, and processing status
 public type BatchResponseSimplePublicUpsertObjectWithErrors record {
-    # Timestamp when the batch operation completed.
+    # Timestamp when the batch operation completed
     string completedAt;
-    # Total number of errors encountered in the batch operation.
+    # Total number of errors encountered in the batch operation
     int:Signed32 numErrors?;
-    # Timestamp when the batch request was received.
+    # Timestamp when the batch request was received
     string requestedAt?;
-    # Timestamp when the batch operation began processing.
+    # Timestamp when the batch operation began processing
     string startedAt;
-    # Map of related resource links associated with the batch response.
+    # Map of related resource links associated with the batch response
     record {|string...;|} links?;
-    # Array of successfully upserted quote objects.
+    # Array of successfully upserted quote objects
     SimplePublicUpsertObject[] results;
-    # Array of errors encountered during the batch upsert operation.
+    # Array of errors encountered during the batch upsert operation
     StandardError[] errors?;
-    # Current processing status of the batch upsert request.
+    # Current processing status of the batch upsert request
     "PENDING"|"PROCESSING"|"CANCELED"|"COMPLETE" status;
 };
 
-# Input schema for batch reading quotes by object ID.
+# Input schema for batch reading quotes by object ID
 public type BatchReadInputSimplePublicObjectId record {
-    # List of property names to return along with their historical values.
+    # List of property names to return along with their historical values
     string[] propertiesWithHistory;
-    # The property to use as the identifier for batch lookup.
+    # The property to use as the identifier for batch lookup
     string idProperty?;
-    # Array of object IDs to retrieve in the batch request.
+    # Array of object IDs to retrieve in the batch request
     SimplePublicObjectId[] inputs;
-    # List of property names to include in the response.
+    # List of property names to include in the response
     string[] properties;
 };
 
-# Batch response containing upserted quote objects with processing status and timestamps.
+# Batch response containing upserted quote objects with processing status and timestamps
 public type BatchResponseSimplePublicUpsertObject record {
-    # Datetime when the batch operation completed.
+    # Datetime when the batch operation completed
     string completedAt;
-    # Datetime when the batch operation was requested.
+    # Datetime when the batch operation was requested
     string requestedAt?;
-    # Datetime when the batch operation began processing.
+    # Datetime when the batch operation began processing
     string startedAt;
-    # Map of related resource links associated with the batch response.
+    # Map of related resource links associated with the batch response
     record {|string...;|} links?;
-    # Array of upserted quote objects returned by the batch operation.
+    # Array of upserted quote objects returned by the batch operation
     SimplePublicUpsertObject[] results;
-    # Current processing status of the batch operation.
+    # Current processing status of the batch operation
     "PENDING"|"PROCESSING"|"CANCELED"|"COMPLETE" status;
 };
 
-# A property value paired with its source metadata and recorded timestamp.
+# A property value paired with its source metadata and recorded timestamp
 public type ValueWithTimestamp record {
-    # Identifier of the source that provided the value.
+    # Identifier of the source that provided the value
     string sourceId?;
-    # The type of source that set or modified the value.
+    # The type of source that set or modified the value
     string sourceType;
-    # Human-readable label describing the value's source.
+    # Human-readable label describing the value's source
     string sourceLabel?;
-    # ID of the user who last updated the value.
+    # ID of the user who last updated the value
     int:Signed32 updatedByUserId?;
-    # The property value recorded at the associated timestamp.
+    # The property value recorded at the associated timestamp
     string value;
-    # Datetime when the value was recorded or last updated.
+    # Datetime when the value was recorded or last updated
     string timestamp;
 };
 
-# Batch input schema containing an array of object IDs for bulk operations.
+# Batch input schema containing an array of object IDs for bulk operations
 public type BatchInputSimplePublicObjectId record {
-    # Array of object IDs to process in the batch operation.
+    # Array of object IDs to process in the batch operation
     SimplePublicObjectId[] inputs;
 };
 
@@ -196,44 +196,44 @@ public type OAuth2RefreshTokenGrantConfig record {|
     string refreshUrl = "https://api.hubapi.com/oauth/v1/token";
 |};
 
-# Batch input schema containing an array of objects for bulk upsert operations.
+# Batch input schema containing an array of objects for bulk upsert operations
 public type BatchInputSimplePublicObjectBatchInputUpsert record {
-    # Array of quote objects to upsert in batch.
+    # Array of quote objects to upsert in batch
     SimplePublicObjectBatchInputUpsert[] inputs;
 };
 
-# Paginated collection of quote objects with a total count and forward paging cursor.
+# Paginated collection of quote objects with a total count and forward paging cursor
 public type CollectionResponseWithTotalSimplePublicObjectForwardPaging record {
-    # Total number of quotes matching the request.
+    # Total number of quotes matching the request
     int:Signed32 total;
-    # Pagination metadata for forward-only cursor-based navigation.
+    # Pagination metadata for forward-only cursor-based navigation
     ForwardPaging paging?;
-    # Array of quote objects returned in the current page.
+    # Array of quote objects returned in the current page
     SimplePublicObject[] results;
 };
 
-# Represents a single quote object with its properties, timestamps, and archive status.
+# Represents a single quote object with its properties, timestamps, and archive status
 public type SimplePublicObject record {
-    # Timestamp when the quote was created.
+    # Timestamp when the quote was created
     string createdAt;
-    # Indicates whether the quote has been archived.
+    # Indicates whether the quote has been archived
     boolean archived?;
-    # Timestamp when the quote was archived.
+    # Timestamp when the quote was archived
     string archivedAt?;
-    # Map of quote property names to their historical values with timestamps.
+    # Map of quote property names to their historical values with timestamps
     record {|ValueWithTimestamp[]...;|} propertiesWithHistory?;
-    # Unique identifier of the quote object.
+    # Unique identifier of the quote object
     string id;
-    # Map of quote property names to their current values.
+    # Map of quote property names to their current values
     record {|string?...;|} properties;
-    # Timestamp when the quote was last updated.
+    # Timestamp when the quote was last updated
     string updatedAt;
 };
 
-# Provides a set of configurations for controlling the behaviours when communicating with a remote HTTP endpoint.
+# Provides a set of configurations for controlling the behaviours when communicating with a remote HTTP endpoint
 @display {label: "Connection Config"}
 public type ConnectionConfig record {|
-    # Provides Auth configurations needed when communicating with a remote HTTP endpoint.
+    # Provides Auth configurations needed when communicating with a remote HTTP endpoint
     http:BearerTokenConfig|OAuth2RefreshTokenGrantConfig|ApiKeysConfig auth;
     # The HTTP version understood by the client
     http:HttpVersion httpVersion = http:HTTP_2_0;
@@ -270,13 +270,13 @@ public type ConnectionConfig record {|
     # Enables the inbound payload validation functionality which provided by the constraint package. Enabled by default
     boolean validation = true;
     # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional, 
-    # and absent fields are handled as `nilable` types. Enabled by default.
+    # and absent fields are handled as `nilable` types. Enabled by default
     boolean laxDataBinding = true;
 |};
 
-# Represents a public object identifier containing a unique ID string.
+# Represents a public object identifier containing a unique ID string
 public type PublicObjectId record {
-    # Unique identifier of the public object.
+    # Unique identifier of the public object
     string id;
 };
 
@@ -292,67 +292,67 @@ public type PostCrmV3ObjectsQuotesBatchReadReadQueries record {
     boolean archived = false;
 };
 
-# Pagination metadata containing cursors for navigating to the next or previous page.
+# Pagination metadata containing cursors for navigating to the next or previous page
 public type Paging record {
-    # Pagination cursor object for retrieving the next page of results.
+    # Pagination cursor object for retrieving the next page of results
     NextPage next?;
-    # Pagination cursor details for navigating to the previous page of results.
+    # Pagination cursor details for navigating to the previous page of results
     PreviousPage prev?;
 };
 
-# Request body for searching quotes with filters, sorting, pagination, and property selection.
+# Request body for searching quotes with filters, sorting, pagination, and property selection
 public type PublicObjectSearchRequest record {
-    # Full-text search query string to filter quotes.
+    # Full-text search query string to filter quotes
     string query?;
-    # Maximum number of results to return per page.
+    # Maximum number of results to return per page
     int:Signed32 'limit?;
-    # Pagination cursor token for retrieving the next page of results.
+    # Pagination cursor token for retrieving the next page of results
     string after?;
-    # List of property names to sort results by.
+    # List of property names to sort results by
     string[] sorts?;
-    # List of property names to include in the response.
+    # List of property names to include in the response
     string[] properties?;
-    # Groups of filters used to narrow search results.
+    # Groups of filters used to narrow search results
     FilterGroup[] filterGroups?;
 };
 
-# Input object for a batch upsert operation, containing an identifier and property values for a quote.
+# Input object for a batch upsert operation, containing an identifier and property values for a quote
 public type SimplePublicObjectBatchInputUpsert record {
-    # The property name used as the unique identifier for the upsert.
+    # The property name used as the unique identifier for the upsert
     string idProperty?;
-    # Trace identifier for tracking the object write operation.
+    # Trace identifier for tracking the object write operation
     string objectWriteTraceId?;
-    # The unique identifier of the quote to upsert.
+    # The unique identifier of the quote to upsert
     string id;
-    # Key-value map of quote property names and their values.
+    # Key-value map of quote property names and their values
     record {|string...;|} properties;
 };
 
-# Batch operation response containing results, status, timestamps, and any errors encountered during processing.
+# Batch operation response containing results, status, timestamps, and any errors encountered during processing
 public type BatchResponseSimplePublicObjectWithErrors record {
-    # Timestamp indicating when the batch operation completed.
+    # Timestamp indicating when the batch operation completed
     string completedAt;
-    # Total number of errors encountered during the batch operation.
+    # Total number of errors encountered during the batch operation
     int:Signed32 numErrors?;
-    # Timestamp indicating when the batch operation was requested.
+    # Timestamp indicating when the batch operation was requested
     string requestedAt?;
-    # Timestamp indicating when the batch operation began processing.
+    # Timestamp indicating when the batch operation began processing
     string startedAt;
-    # Map of relevant link names to their associated URLs.
+    # Map of relevant link names to their associated URLs
     record {|string...;|} links?;
-    # List of successfully processed quote objects from the batch.
+    # List of successfully processed quote objects from the batch
     SimplePublicObject[] results;
-    # List of errors encountered for individual records in the batch.
+    # List of errors encountered for individual records in the batch
     StandardError[] errors?;
-    # Current processing status of the batch operation.
+    # Current processing status of the batch operation
     "PENDING"|"PROCESSING"|"CANCELED"|"COMPLETE" status;
 };
 
-# Input payload for creating or updating a quote object, containing property values and optional association definitions.
+# Input payload for creating or updating a quote object, containing property values and optional association definitions
 public type SimplePublicObjectInput record {
-    # Optional trace identifier for tracking the write operation.
+    # Optional trace identifier for tracking the write operation
     string objectWriteTraceId?;
-    # Key-value map of quote property names and their string values.
+    # Key-value map of quote property names and their string values
     record {|string...;|} properties;
 };
 
@@ -370,136 +370,136 @@ public type GetCrmV3ObjectsQuotesQuoteIdGetByIdQueries record {
     string[] properties?;
 };
 
-# Paginated collection of quote objects, each including their associated records and properties.
+# Paginated collection of quote objects, each including their associated records and properties
 public type CollectionResponseSimplePublicObjectWithAssociationsForwardPaging record {
-    # Pagination metadata for forward-only cursor-based navigation.
+    # Pagination metadata for forward-only cursor-based navigation
     ForwardPaging paging?;
-    # Array of quote objects returned in the current page of results.
+    # Array of quote objects returned in the current page of results
     SimplePublicObjectWithAssociations[] results;
 };
 
-# Defines the category and type of an association between two CRM objects.
+# Defines the category and type of an association between two CRM objects
 public type AssociationSpec record {
-    # The category of the association: HUBSPOT_DEFINED, USER_DEFINED, or INTEGRATOR_DEFINED.
+    # The category of the association: HUBSPOT_DEFINED, USER_DEFINED, or INTEGRATOR_DEFINED
     "HUBSPOT_DEFINED"|"USER_DEFINED"|"INTEGRATOR_DEFINED" associationCategory;
-    # Numeric identifier for the specific association type.
+    # Numeric identifier for the specific association type
     int:Signed32 associationTypeId;
 };
 
-# A quote object including its properties, timestamps, and any associated CRM records.
+# A quote object including its properties, timestamps, and any associated CRM records
 public type SimplePublicObjectWithAssociations record {
-    # Map of associated CRM object types to their related record collections.
+    # Map of associated CRM object types to their related record collections
     record {|CollectionResponseAssociatedId...;|} associations?;
-    # Timestamp indicating when the quote was created.
+    # Timestamp indicating when the quote was created
     string createdAt;
-    # Indicates whether the quote has been archived.
+    # Indicates whether the quote has been archived
     boolean archived?;
-    # Timestamp indicating when the quote was archived.
+    # Timestamp indicating when the quote was archived
     string archivedAt?;
-    # Map of property names to their historical values with timestamps.
+    # Map of property names to their historical values with timestamps
     record {|ValueWithTimestamp[]...;|} propertiesWithHistory?;
-    # Unique identifier of the quote object.
+    # Unique identifier of the quote object
     string id;
-    # Key-value map of the quote's current property names and values.
+    # Key-value map of the quote's current property names and values
     record {|string?...;|} properties;
-    # Timestamp indicating when the quote was last updated.
+    # Timestamp indicating when the quote was last updated
     string updatedAt;
 };
 
-# Defines a single filter condition used to narrow search results by property value.
+# Defines a single filter condition used to narrow search results by property value
 public type Filter record {
-    # Upper bound value for BETWEEN range filter operations.
+    # Upper bound value for BETWEEN range filter operations
     string highValue?;
-    # The name of the property to filter on.
+    # The name of the property to filter on
     string propertyName;
-    # A list of values to match against for multi-value operators.
+    # A list of values to match against for multi-value operators
     string[] values?;
-    # The single value to compare against the specified property.
+    # The single value to compare against the specified property
     string value?;
-    # The comparison operator used to evaluate the filter condition.
+    # The comparison operator used to evaluate the filter condition
     "EQ"|"NEQ"|"LT"|"LTE"|"GT"|"GTE"|"BETWEEN"|"IN"|"NOT_IN"|"HAS_PROPERTY"|"NOT_HAS_PROPERTY"|"CONTAINS_TOKEN"|"NOT_CONTAINS_TOKEN" operator;
 };
 
-# Pagination cursor details for navigating to the previous page of results.
+# Pagination cursor details for navigating to the previous page of results
 public type PreviousPage record {
-    # The cursor token representing the start of the previous page.
+    # The cursor token representing the start of the previous page
     string before;
-    # The URL link to the previous page of results.
+    # The URL link to the previous page of results
     string link?;
 };
 
-# A batch input wrapper containing an array of objects to create.
+# A batch input wrapper containing an array of objects to create
 public type BatchInputSimplePublicObjectInputForCreate record {
-    # The list of objects to be created in the batch operation.
+    # The list of objects to be created in the batch operation
     SimplePublicObjectInputForCreate[] inputs;
 };
 
-# A batch input wrapper containing an array of objects to update.
+# A batch input wrapper containing an array of objects to update
 public type BatchInputSimplePublicObjectBatchInput record {
-    # The list of objects to be updated in the batch operation.
+    # The list of objects to be updated in the batch operation
     SimplePublicObjectBatchInput[] inputs;
 };
 
-# Represents a quote object returned after an upsert operation, indicating whether it was newly created.
+# Represents a quote object returned after an upsert operation, indicating whether it was newly created
 public type SimplePublicUpsertObject record {
-    # The timestamp when the object was originally created.
+    # The timestamp when the object was originally created
     string createdAt;
-    # Indicates whether the object has been archived.
+    # Indicates whether the object has been archived
     boolean archived?;
-    # The timestamp when the object was archived, if applicable.
+    # The timestamp when the object was archived, if applicable
     string archivedAt?;
-    # Indicates whether the object was newly created by the upsert.
+    # Indicates whether the object was newly created by the upsert
     boolean 'new;
-    # A map of property values including their historical change records.
+    # A map of property values including their historical change records
     record {|ValueWithTimestamp[]...;|} propertiesWithHistory?;
-    # The unique identifier of the upserted object.
+    # The unique identifier of the upserted object
     string id;
-    # A map of the object's current property names and their values.
+    # A map of the object's current property names and their values
     record {|string...;|} properties;
-    # The timestamp when the object was last updated.
+    # The timestamp when the object was last updated
     string updatedAt;
 };
 
-# Input object for batch updating a quote, containing an identifier and property values.
+# Input object for batch updating a quote, containing an identifier and property values
 public type SimplePublicObjectBatchInput record {
-    # The property name used as the unique identifier for the object.
+    # The property name used as the unique identifier for the object
     string idProperty?;
-    # Trace ID for tracking the object write operation.
+    # Trace ID for tracking the object write operation
     string objectWriteTraceId?;
-    # The unique identifier of the quote to update.
+    # The unique identifier of the quote to update
     string id;
-    # Key-value map of quote properties to update.
+    # Key-value map of quote properties to update
     record {|string...;|} properties;
 };
 
-# Pagination cursor object for retrieving the next page of results.
+# Pagination cursor object for retrieving the next page of results
 public type NextPage record {
-    # The URL query string link to the next page of results.
+    # The URL query string link to the next page of results
     string link?;
-    # The cursor token used to fetch the next page of results.
+    # The cursor token used to fetch the next page of results
     string after;
 };
 
-# Represents an associated object with its identifier and association type.
+# Represents an associated object with its identifier and association type
 public type AssociatedId record {
-    # The unique identifier of the associated object.
+    # The unique identifier of the associated object
     string id;
-    # The type of association between the objects.
+    # The type of association between the objects
     string 'type;
 };
 
-# Provides API key configurations needed when communicating with a remote HTTP endpoint.
+# Provides API key configurations needed when communicating with a remote HTTP endpoint
 public type ApiKeysConfig record {|
     string privateAppLegacy;
     string privateApp;
 |};
 
-# Input object for creating a new quote, including properties and associations.
+# Input object for creating a new quote, including properties and associations
 public type SimplePublicObjectInputForCreate record {
-    # List of associations linking the new quote to other CRM objects.
+    # List of associations linking the new quote to other CRM objects
     PublicAssociationsForObject[] associations;
-    # Trace ID for tracking the object write operation.
+    # Trace ID for tracking the object write operation
     string objectWriteTraceId?;
-    # Key-value map of property values to set on the new quote.
+    # Key-value map of property values to set on the new quote
     record {|string...;|} properties;
 };
